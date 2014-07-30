@@ -1,0 +1,1 @@
+require_relative "vending_machine/machine"
