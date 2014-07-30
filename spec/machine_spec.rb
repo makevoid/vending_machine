@@ -1,26 +1,28 @@
 require 'spec_helper'
 
-describe VendingMachine::Machine do
-  xit "initializes" do
+describe Machine do
+  it "initializes" do
+    subject.should be_a Machine
+  end
+  
+  it "creates a transaction" do
+    subject.transaction do |t|
+      t
+    end.should be_a Transaction
+  end
+  
+  xit "returns available products" do
     
   end
   
-  xit "creates a transaction" do
-    
-  end
   
-  it "returns available products"
   it "returns contained coins"
   it "returns balance"
   it "returns transaction log"
 end
 
 ### reference spec
-#
-# machine = Machine.new
-# 
 
-# 
 # machine.products = [<Product>, <Product>, ...]
 # machine.coins = [<Coin>, <Coin>, ...]
 # 

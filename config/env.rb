@@ -6,8 +6,7 @@ Bundler.require :default
 path = File.expand_path "../../", __FILE__
 PATH = path
 
-module VendingMachine
-end
+require 'logger'
 
 require "#{path}/lib/vending_machine"
 require "#{path}/data/coin"
