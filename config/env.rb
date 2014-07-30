@@ -10,3 +10,4 @@ module VendingMachine
 end
 
 require "#{path}/lib/vending_machine"
+require "#{path}/data/coin"
