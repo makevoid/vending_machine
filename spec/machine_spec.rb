@@ -25,13 +25,10 @@ describe Machine do
     stock_coins.values.first.should  be_an Integer
   end
    
-  it "returns available products" do
-    subject.products.should == []
+  it "returns total balance" do # as sum of total coins value
+    subject.balance.should == 17_00
   end
   
-  
-  it "returns contained coins"
-  it "returns balance"
   it "returns transaction log"
 end
 

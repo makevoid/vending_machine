@@ -15,6 +15,10 @@ module VendingMachine
       @stock ||= Stock.new
     end
     
+    def balance
+      stock.balance
+    end
+    
     protected
     
     def log(message)

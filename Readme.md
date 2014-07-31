@@ -74,3 +74,9 @@ developer's notes:
 console code reloading
 
 load "lib/vending_machine/machine.rb"
+
+---
+
+bugs:
+
+- machine: don't return as change coins that you don't have

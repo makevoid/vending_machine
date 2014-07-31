@@ -9,10 +9,10 @@ module VendingMachine
   
     COINS = {
       Coin.new("1p" ) => 5,
-      Coin.new("2p" ) => 0,
-      Coin.new("5p" ) => 0,
+      Coin.new("2p" ) => 5,
+      Coin.new("5p" ) => 3,
       Coin.new("10p") => 3,
-      Coin.new("20p") => 0,
+      Coin.new("20p") => 2,
       Coin.new("50p") => 4,
       Coin.new("£1" ) => 10,
       Coin.new("£2" ) => 2,
@@ -27,7 +27,7 @@ module VendingMachine
     end
 
     def balance
-      raise "TODO: implement balance as total coins value (sum)"
+      coins.map{ |coin, amount| coin.value * amount }.inject(:+)
     end
   end
 end
