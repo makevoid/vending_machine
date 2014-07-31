@@ -1,5 +1,6 @@
 module VendingMachine
   class Stock
+    
     PRODUCTS = {
       Product.new("soda")       => 3,
       Product.new("lemonade")   => 1,
@@ -27,6 +28,12 @@ module VendingMachine
     end
 
     def balance
+      coins_value coins
+    end
+    
+    protected
+    
+    def coins_value(coins)
       coins.map{ |coin, amount| coin.value * amount }.inject(:+)
     end
   end

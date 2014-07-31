@@ -7,8 +7,8 @@ describe Machine do
   
   it "creates a transaction" do
     subject.transaction do |t|
-      t
-    end.should be_a Transaction
+      t.should be_a Transaction
+    end
   end
   
   it "has a stock with products" do

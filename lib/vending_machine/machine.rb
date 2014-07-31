@@ -8,9 +8,11 @@ module VendingMachine
     end
     
     def transaction(&block)
-      block.call(Transaction.new)
+      @transaction ||= Transaction.new
+      block.call @transaction
+      @transaction.resolve
     end
-    
+        
     def balance
       stock.balance
     end
@@ -21,9 +23,14 @@ module VendingMachine
     
     def restock!
       @stock = Stock.new
+      reset_transaction
     end
     
     protected
+    
+    def reset_transaction
+      @transaction = nil
+    end
     
     def log(message)
       @logger.logger << "#{message}\n" unless ENV["app_env"] == "test"

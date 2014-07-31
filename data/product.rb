@@ -3,7 +3,7 @@ class Product
   
   def initialize(name)
     @name = name
-    @cost = PRICES[name]
+    @price = PRICES[name]
   end
   
   PRICES = {

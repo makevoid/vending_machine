@@ -33,6 +33,39 @@ describe VendingMachine::Transaction do
       @machine.restock!
     end
     
+    it "resolves a happy transaction" do
+      product = Product.new "lemonade"
+      @machine.transaction do |t|
+        t.product_select  product
+        t.coins_insert    Coin.new("50p")
+      end.should == {
+        product: product, 
+        change: 0, 
+        message: "Thanks for the purchase", 
+        status: :success,
+      }
+    end
+    
+    it "asks to select a product" do # note: call resolve automatically after some time of inactivity
+      product = Product.new "lemonade"
+      @machine.transaction do |t|
+        t.coins_insert    Coin.new("50p")
+      end.should == {
+        message: "You have to select a product", 
+        status: :error,
+      }
+    end
+    
+    it "doesn't eats (steals) coin from one transaction to another" do 
+      product = Product.new "lemonade"
+      @machine.transaction do |t|
+        t.coins_insert    Coin.new("50p")
+      end
+      @machine.transaction do |t|
+        t.product_select  product
+      end[:status].should == :success
+    end
+    
   end
   
   # after each event -> callback
