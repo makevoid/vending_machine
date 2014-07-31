@@ -2,7 +2,15 @@
 
 Vending machine exercise
 
+### Installing
+
+ruby 1.9+ is required, i use 2.1 but any will be ok
+
+    bundle
+
 ---
+
+### Running (console)
 
 Sample running session:
 
@@ -14,52 +22,26 @@ Sample running session:
     
     m = Machine.new
     
-    m.transaction do
-      
-      # programmer's notes: not sure if block is the best construct 
+    m.stock.products # note there is one lemonade
     
+    m.transaction do |t|
+      t.product_select  Product.new("lemonade")
+      t.coins_insert    Coin.new("50p")
     end
     
-
----
-
-flow:
-
-    Machine
-      product is selected
-      money is inserted
-        (ask if not enough)
-      returns the product
-
-features:
-
-    Load products
-    Load/(Unload?) coins
-
-    Log products, Log coins
-    (file store? plain text / json?)
-
----
-
-proposed api:
-
-    machine = Machine.new
-
-    machine.transaction do |t|
-      t.product_select <Product>
-      t.coins_insert [<Coin>, <Coin>, ...]    # t.coin_insert <Coin>
-  
-      # callback
-      # returns the product (+ coins [change]) / asks for more coins (reopen a transaction block)
-    end
-
-    machine.products = [<Product>, <Product>, ...]
-    machine.coins = [<Coin>, <Coin>, ...]
-
-    machine.balance = £ xxx
+    m.stock.products
     
-    # I suppose there is a unhandled real scenario where the machine timeouts after a failed transaction and gives the coins back to the user 
-  
+    
+see the specs (especially transaction_spec) to see all callable methods
+
+---
+ 
+### Specs
+
+run specs with:
+
+    rspec
+   
 ---
 
 problem in extended text form  
@@ -69,14 +51,12 @@ The vending machine, once a product is selected and the appropriate amount of mo
 
 ---
 
-developer's notes:
+bugs & stuff left to implement:
 
-console code reloading
+- don't return (as change) coins that are not in the machine
+- don't return products that you don't have in stock
+- use recursion to provide more than one coin as change (I can implement this if you want me to, just drop me an email)
 
-load "lib/vending_machine/machine.rb"
+I think that it's all
 
----
-
-bugs:
-
-- machine: don't return as change coins that you don't have
+note: in a real production environment I'd add more complex specs to cover all edge cases and provide full implementation of everything, for this exercise I think it's enough
