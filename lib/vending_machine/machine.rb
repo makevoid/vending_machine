@@ -8,7 +8,7 @@ module VendingMachine
     end
     
     def transaction(&block)
-      @transaction ||= Transaction.new
+      @transaction ||= Transaction.new self
       block.call @transaction
       @transaction.resolve
     end

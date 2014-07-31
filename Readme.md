@@ -58,7 +58,7 @@ proposed api:
 
     machine.balance = £ xxx
     
-    machine.transactions # stores only successful transactions, I suppose the machine timeouts after a failed transaction and gives the coins back to the user 
+    # I suppose there is a unhandled real scenario where the machine timeouts after a failed transaction and gives the coins back to the user 
   
 ---
 

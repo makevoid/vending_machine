@@ -3,7 +3,8 @@ module VendingMachine
     
     attr_reader :selection, :coins_inserted
     
-    def initialize 
+    def initialize(machine=nil)
+      @machine = machine
       @coins_inserted = []
     end
     
@@ -20,8 +21,10 @@ module VendingMachine
     def resolve
       return { message: "You have to select a product", status: :error } unless @selection
       
-      if enough_coins?
-        change = calculate_change_value 
+      if enough_coins? 
+        stock_coins
+        remove_product_from_stock
+        change = calculate_change
         { product: @selection, change: change, message: "Thanks for the purchase", status: :success }
       else
         { product: nil, change: nil, message: "Not enough money bro", status: :error }
@@ -30,8 +33,34 @@ module VendingMachine
     
     protected
     
+    def stock_coins
+      stock = @machine.stock
+      @coins_inserted.map do |coin|
+        stock.coins[coin.label] += 1
+      end
+    end
+    
+    def remove_product_from_stock
+      stock = @machine.stock
+      stock.products[@selection.name] -= 1
+    end
+    
     def calculate_change
-      calculate_change_value #TODO: in coins!
+      value = calculate_change_value
+      return [] if value == 0
+      
+      change = []
+      
+      # TODO use recursion to support more than 1 coin as change 
+      Coin.all.map do |coin|
+        if value >= coin.value
+          change << coin
+          value -= coin.value
+        end
+      end
+      # recurse until here
+      
+      return change
     end
     
     def calculate_change_value
@@ -39,7 +68,7 @@ module VendingMachine
     end
     
     def enough_coins?
-      true # TODO: hardcoded, must implement!!!
+      calculate_change_value >= 0
     end
     
     def coins_value(coins)

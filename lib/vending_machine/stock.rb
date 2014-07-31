@@ -2,21 +2,21 @@ module VendingMachine
   class Stock
     
     PRODUCTS = {
-      Product.new("soda")       => 3,
-      Product.new("lemonade")   => 1,
-      Product.new("pie")        => 5,
-      Product.new("popcorn")    => 2,
+      "soda"       => 3,
+      "lemonade"   => 1,
+      "pie"        => 5,
+      "popcorn"    => 2,
     }
   
     COINS = {
-      Coin.new("1p" ) => 5,
-      Coin.new("2p" ) => 5,
-      Coin.new("5p" ) => 3,
-      Coin.new("10p") => 3,
-      Coin.new("20p") => 2,
-      Coin.new("50p") => 4,
-      Coin.new("£1" ) => 10,
-      Coin.new("£2" ) => 2,
+      "1p"  => 5,
+      "2p"  => 5,
+      "5p"  => 3,
+      "10p" => 3,
+      "20p" => 2,
+      "50p" => 4,
+      "£1"  => 10,
+      "£2"  => 2,
     }
   
     def products
@@ -34,7 +34,7 @@ module VendingMachine
     protected
     
     def coins_value(coins)
-      coins.map{ |coin, amount| coin.value * amount }.inject(:+)
+      coins.map{ |coin, amount| Coin.new(coin).value * amount }.inject(:+)
     end
   end
 end

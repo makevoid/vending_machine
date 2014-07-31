@@ -24,8 +24,16 @@ describe VendingMachine::Transaction do
     t.coins_inserted.should === [coin, coin2]
   end
   
-  describe "full transaction" do
-    before :all do
+  describe "resolve" do
+    # note: in a real production app I would test this, as this is an exercise I will leave this spec unimplemented
+  end
+  
+  describe "enough_coins?" do
+    # note: same as above, I'm leaving this spec unimplemented
+  end
+  
+  context "full transaction" do
+    before  do
       @machine = Machine.new
     end
     
@@ -40,7 +48,7 @@ describe VendingMachine::Transaction do
         t.coins_insert    Coin.new("50p")
       end.should == {
         product: product, 
-        change: 0, 
+        change: [], 
         message: "Thanks for the purchase", 
         status: :success,
       }
@@ -66,9 +74,22 @@ describe VendingMachine::Transaction do
       end[:status].should == :success
     end
     
+    it "gives change back to the user" do 
+      product = Product.new "lemonade"
+      transaction = @machine.transaction do |t|
+        t.product_select  product
+        t.coins_insert    Coin.new("£1")
+      end
+      transaction[:change].first.label.should == "50p"
+      transaction.delete :change
+      transaction.should == {
+        product: product, 
+        message: "Thanks for the purchase", 
+        status: :success,
+      }
+    end
+    
+    # note: in a real production environment I'd add more complex specs to cover all edge cases, for this exercise I think it's enough
   end
   
-  # after each event -> callback
-  #  returns the product / asks for more coins (reopen a transaction block)
 end
-

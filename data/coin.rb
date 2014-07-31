@@ -16,5 +16,9 @@ class Coin
     "£1"  => 1_00,
     "£2"  => 2_00,
   }
-
+  
+  def self.all
+    COINS.keys.map{ |c| Coin.new c }.reverse
+  end
+  
 end
