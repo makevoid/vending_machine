@@ -11,6 +11,10 @@ module VendingMachine
       block.call(Transaction.new)
     end
     
+    def stock
+      @stock ||= Stock.new
+    end
+    
     protected
     
     def log(message)

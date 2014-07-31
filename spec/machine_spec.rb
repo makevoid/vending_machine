@@ -11,8 +11,22 @@ describe Machine do
     end.should be_a Transaction
   end
   
-  xit "returns available products" do
-    
+  it "has a stock with products" do
+    subject.stock.products.should be_a Hash
+    stock_product = subject.stock.products
+    stock_product.keys.first.should    be_a  Product
+    stock_product.values.first.should  be_an Integer
+  end
+  
+  it "stores coins" do
+    subject.stock.coins.should be_a Hash
+    stock_coins = subject.stock.coins
+    stock_coins.keys.first.should    be_a  Coin
+    stock_coins.values.first.should  be_an Integer
+  end
+   
+  it "returns available products" do
+    subject.products.should == []
   end
   
   

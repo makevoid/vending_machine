@@ -8,5 +8,6 @@ PATH = path
 
 require 'logger'
 
-require "#{path}/lib/vending_machine"
 require "#{path}/data/coin"
+require "#{path}/data/product"
+require "#{path}/lib/vending_machine"
