@@ -11,12 +11,16 @@ module VendingMachine
       block.call(Transaction.new)
     end
     
+    def balance
+      stock.balance
+    end
+    
     def stock
       @stock ||= Stock.new
     end
     
-    def balance
-      stock.balance
+    def restock!
+      @stock = Stock.new
     end
     
     protected
